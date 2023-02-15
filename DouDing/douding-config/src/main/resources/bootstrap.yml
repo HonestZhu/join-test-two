@@ -17,7 +17,9 @@ spring:
 eureka:
   client:
     service-url:
-      defaultZone: http://admin:admin@domain-eureka:8761/eureka/
+      # defaultZone: http://admin:admin@domain-eureka:8761/eureka/
+      defaultZone: http://127.0.0.1:8761/eureka/
+
 
 #日志
 logging:

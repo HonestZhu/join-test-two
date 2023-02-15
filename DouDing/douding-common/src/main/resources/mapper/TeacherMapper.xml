@@ -68,40 +68,202 @@
       </foreach>
     </where>
   </sql>
+
+
   <sql id="Base_Column_List">
-
+    id, `name`, `nickname`, `image`, `position`, `motto`, `intro`
   </sql>
+
+
   <select id="selectByExample" parameterType="com.douding.server.domain.TeacherExample" resultMap="BaseResultMap">
-
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from teacher
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
   </select>
+
+
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
-
+    select
+    <include refid="Base_Column_List" />
+    from teacher
+    where id = #{id,jdbcType=CHAR}
   </select>
+
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-
+    delete from teacher
+    where id = #{id,jdbcType=CHAR}
   </delete>
+
+
   <delete id="deleteByExample" parameterType="com.douding.server.domain.TeacherExample">
-
+    delete from teacher
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
   </delete>
+
+
   <insert id="insert" parameterType="com.douding.server.domain.Teacher">
-
+    insert into teacher (id, `name`, `nickname`, `image`, `position`, `motto`, `intro`)
+    values (#{id,jdbcType=CHAR},
+            #{name,jdbcType=VARCHAR},
+            #{nickname,jdbcType=VARCHAR},
+            #{image,jdbcType=VARCHAR},
+            #{position,jdbcType=VARCHAR},
+            #{motto,jdbcType=VARCHAR},
+            #{intro,jdbcType=VARCHAR})
   </insert>
+
+
   <insert id="insertSelective" parameterType="com.douding.server.domain.Teacher">
-
+    insert into teacher
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="name != null">
+        `name`,
+      </if>
+      <if test="nickname != null">
+        `nickname`,
+      </if>
+      <if test="image != null">
+        `image`,
+      </if>
+      <if test="position != null">
+        `position`,
+      </if>
+      <if test="motto != null">
+        `motto`,
+      </if>
+      <if test="intro != null">
+        `intro`,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=CHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="nickname != null">
+        #{nickname,jdbcType=VARCHAR},
+      </if>
+      <if test="image != null">
+        #{image,jdbcType=VARCHAR},
+      </if>
+      <if test="position != null">
+        #{position,jdbcType=VARCHAR},
+      </if>
+      <if test="motto != null">
+        #{motto,jdbcType=VARCHAR},
+      </if>
+      <if test="intro != null">
+        #{intro,jdbcType=CHVARCHARAR},
+      </if>
+    </trim>
   </insert>
+
+
   <select id="countByExample" parameterType="com.douding.server.domain.TeacherExample" resultType="java.lang.Long">
-
+    select count(*) from teacher
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
   </select>
+
+
   <update id="updateByExampleSelective" parameterType="map">
-
+    update teacher
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=CHAR},
+      </if>
+      <if test="record.name != null">
+        `name` = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.nickname != null">
+        `nickname` = #{record.nickname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.image != null">
+        `image` = #{record.image,jdbcType=VARCHAR},
+      </if>
+      <if test="record.position != null">
+        `position` = #{record.position,jdbcType=VARCHAR},
+      </if>
+      <if test="record.motto != null">
+        `motto` = #{record.motto,jdbcType=VARCHAR},
+      </if>
+      <if test="record.intro != null">
+        `intro` = #{record.intro,jdbcType=VARCHAR},
+      </if>
+    </set>
+      <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
   </update>
+
+
   <update id="updateByExample" parameterType="map">
-
+    update teacher
+    set id = #{record.id,jdbcType=CHAR},
+        `name` = #{record.name,jdbcType=VARCHAR},
+        `nickname` = #{record.nickname,jdbcType=VARCHAR},
+        `image` = #{record.image,jdbcType=VARCHAR},
+        `position` = #{record.position,jdbcType=VARCHAR},
+        `motto` = #{record.motto,jdbcType=VARCHAR},
+        `intro` = #{record.intro,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
   </update>
+
+
   <update id="updateByPrimaryKeySelective" parameterType="com.douding.server.domain.Teacher">
-
+    update teacher
+    <set>
+      <if test="record.name != null">
+        `name` = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.nickname != null">
+        `nickname` = #{nickname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.image != null">
+        `image` = #{image,jdbcType=VARCHAR},
+      </if>
+      <if test="record.position != null">
+        `position` = #{position,jdbcType=VARCHAR},
+      </if>
+      <if test="record.motto != null">
+        `motto` = #{motto,jdbcType=VARCHAR},
+      </if>
+      <if test="record.intro != null">
+        `intro` = #{intro,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=CHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.douding.server.domain.Teacher">
 
+
+  <update id="updateByPrimaryKey" parameterType="com.douding.server.domain.Teacher">
+    update teacher
+    set `name` = #{name,jdbcType=VARCHAR},
+        `nickname` = #{nickname,jdbcType=VARCHAR},
+        `image` = #{image,jdbcType=VARCHAR},
+        `position` = #{position,jdbcType=VARCHAR},
+        `motto` = #{motto,jdbcType=VARCHAR},
+        `intro` = #{intro,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=CHAR}
   </update>
 </mapper>

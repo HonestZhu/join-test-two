@@ -18,7 +18,7 @@
             <div class="col-12">
               <a v-on:click="onClickLevel2('11111111')" id="category-11111111" href="javascript:;" class="on">不限</a>
               <a v-for="o in level2" v-on:click="onClickLevel2(o.id)" v-bind:id="'category-' + o.id" href="javascript:;">{{o.name}}</a>
-  
+
               <div style="clear:both"></div>
             </div>
           </div>
@@ -40,14 +40,14 @@
           </div>
         </div>
       </div>
-  
+
     </main>
   </template>
-  
+
   <script>
     import TheCourse from "../components/the-course";
     import Pagination from "../components/pagination";
-  
+
     export default {
       components: {Pagination, TheCourse},
       name: 'list',
@@ -63,7 +63,7 @@
       },
       mounted() {
         let _this = this;
-        _this.$refs.pagination.size = 1;
+        _this.$refs.pagination.size = 3;
         _this.listCourse(1);
         _this.allCategory();
       },
@@ -87,7 +87,7 @@
             console.log("error：", response);
           })
         },
-  
+
         /**
          * 所有分类查询
          */
@@ -97,7 +97,7 @@
             let resp = response.data;
             let categorys = resp.content;
             _this.categorys = categorys;
-  
+
             // 将所有记录格式化成树形结构
             _this.level1 = [];
             for (let i = 0; i < categorys.length; i++) {
@@ -110,14 +110,14 @@
             }
           })
         },
-  
+
         /**
          * 点击一级分类时
          * @param level1Id
          */
         onClickLevel1(level1Id) {
           let _this = this;
-  
+
           // 点击一级分类时，设置变量，用于课程筛选
           // 二级分类id为空，
           // 如果点击的是【全部】，则一级分类id为空
@@ -126,15 +126,15 @@
           if (level1Id === "00000000") {
             _this.level1Id = null;
           }
-  
+
           // 点击一级分类时，显示激活状态
           $("#category-" + level1Id).siblings("a").removeClass("cur");
           $("#category-" + level1Id).addClass("cur");
-  
+
           // 点击一级分类时，二级分类【无限】按钮要设置激活状态
           $("#category-11111111").siblings("a").removeClass("on");
           $("#category-11111111").addClass("on");
-  
+
           // 注意：要先把level2中所有的值清空，再往里放
           _this.level2 = [];
           let categorys = _this.categorys;
@@ -156,11 +156,11 @@
               }
             }
           }
-  
+
           // 重新加载课程列表
           _this.listCourse(1);
         },
-  
+
         /**
          * 点击二级分类时
          * @param level1Id
@@ -169,7 +169,7 @@
           let _this = this;
           $("#category-" + level2Id).siblings("a").removeClass("on");
           $("#category-" + level2Id).addClass("on");
-  
+
           // 点击二级分类时，设置变量，用于课程筛选
           // 如果点击的是【无限】，则二级分类id为空
           if (level2Id === "11111111") {
@@ -177,11 +177,11 @@
           } else {
             _this.level2Id = level2Id;
           }
-  
+
           // 重新加载课程列表
           _this.listCourse(1);
         },
-  
+
       }
     }
   </script>
@@ -260,4 +260,3 @@
       background: #d9dde1;
     }
   </style>
-  

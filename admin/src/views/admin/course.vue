@@ -93,10 +93,10 @@
                         <div class="form-group">
                             <label class="col-sm-2 control-label">封面</label>
                             <div class="col-sm-10">
-                                <big-file 
+                                <big-file
                                 v-bind:suffixs="['jpg','jpeg','png']"
                                 v-bind:input-id="'image-upload'"
-                                v-bind:text="'上传封面'" 
+                                v-bind:text="'上传封面'"
                                 v-bind:use="FILE_USE.COURSE.key"
                                 v-bind:after-upload="afterUpload"></big-file>
                                 <div v-show="course.image" class="row">
@@ -139,7 +139,7 @@
                                 <input v-model="course.price" class="form-control" placeholder="价格（元）,无错类型:BigDecimal">
                             </div>
                         </div>
-                        
+
                         <div class="form-group">
                             <label class="col-sm-2 control-label">级别</label>
                             <div class="col-sm-10">
@@ -396,7 +396,7 @@ export default {
                     //给双向绑定数据赋值
                     _this.categorys = result.content;
                     _this.initTree();
-                    
+
                 }//end  response
             );//end then
         },//end method all
@@ -426,11 +426,11 @@ export default {
         listCategory(courseId){
             let _this = this;
             Loading.show();
-            let url = "/business/admin/course/list-category/" + courseId; 
+            let url = "/business/admin/course/list-category/" + courseId;
             _this.$ajax.post(url).then((response)=>{
                 Loading.hide();
                 console.log("查找课程下所有分类:",response);
-                
+
                 let categorys = response.data.content;
 
                 //选中分类树
@@ -454,7 +454,7 @@ export default {
             $("#content").summernote('code','');
             _this.saveContentLabel = "";
 
-           
+
             Loading.show();
             let url = "/business/admin/course/find-content/"+id;
             _this.$ajax.get(url).then(
@@ -470,7 +470,7 @@ export default {
                         _this.course = course; //保存对象到全局
                           //加载内容列表 要在保存全局course之后 否则获得不到courseId
                         _this.listContentFiles();
-                        
+
                         //自动保存 setInterval HTML5 内置函数
                         let saveContentInterval = setInterval(function(){
                             _this.saveContent();
@@ -479,7 +479,7 @@ export default {
                         $("#course-content-modal").on('hidden.bs.modal',function(e){
                             clearInterval(saveContentInterval);
                         });
-                        
+
                     }else {
                         Toast.warning(result.message);
                     }//end else
@@ -491,7 +491,7 @@ export default {
             let _this = this;
             let content = $("#content").summernote("code");
             // Loading.show();
-            let url = "/business/admin/course/save-content"; 
+            let url = "/business/admin/course/save-content";
             _this.$ajax.post(url,{
                 id:_this.course.id,
                 content:content
@@ -551,14 +551,14 @@ export default {
                     let result = response.data;
                     //给双向绑定数据赋值
                     _this.teachers = result.content;
-                    
-                    
+
+
                 }//end  response
             );//end then
         },//end method allTeachers
         afterUpload(data){
             let _this = this;
-            _this.course.image = data.content.path;
+            _this.course.image = "http://127.0.0.1:9003/file/f/" + data.content.path;
             console.log("文件上传完成回调afterUpload:"+data.content.path)
         }, //end method afterUpload  file.vue组件的回调函数
         //富文本内容中的文件

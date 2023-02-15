@@ -7,7 +7,7 @@
       <input class="hidden" type="file" ref="file" v-on:change="uploadFile()" v-bind:id="inputId+'-input'">
     </div>
   </template>
-  
+
   <script>
   export default {
       name: 'big-file',
@@ -42,9 +42,9 @@
         uploadFile(){
               let _this = this;
               let formData = new window.FormData();
-              
+
               let file = _this.$refs.file.files[0]; //找到ref别名
-              
+
               console.log("file:",file);
               // _this.file = file;//文件保存成全局对象 在引用file通过全局对象引用
               //生成文件表示 同一个文件重复生成的标识是相同的
@@ -61,7 +61,7 @@
               let suffix = fileName.substring(fileName.lastIndexOf(".")+1,fileName.length).toLowerCase();
               console.log(suffix);
               let validateSuffix = false;
-  
+
               for(let i =0; i < suffixs.length;i++){
                   if(suffixs[i].toLowerCase()===suffix){
                       validateSuffix = true;
@@ -70,7 +70,7 @@
               }
               if(!validateSuffix){
                   Toast.warning("文件格式不正确!"+suffixs.join(","));
-                                  
+
                   //解决连续选相同文件 onchange 后续不被触发的bug
                   //每次上传之后 清空文本框的值
                   $("#"+_this.inputId+"-input").val("");
@@ -81,7 +81,7 @@
             // let shardSize = 5 * 1024 * 1024; //一个分片5MB大小
             let shardSize = _this.shardSize;
             let shardIndex = 1; //分片索引 1标识第一个分片 不要从0开始
-            let size = file.size; 
+            let size = file.size;
             let shardTotal = Math.ceil(size / shardSize); //总片数
 
             let param = {
@@ -98,8 +98,8 @@
             //参数准备完毕之后调用check方法 校验后台分片是否为断点
             _this.check(param);
 
-            
-            
+
+
 
           },//end method uploadImage
           //计算分片
@@ -135,9 +135,9 @@
                 param.shard = base64;
 
                 let url = "/file/admin/file/upload"
-                //let url = "/file/admin/oss-append"
+                //let url = "/file/admin/oss-apprnd"
                 _this.$ajax.post(url,param).then((response)=>{
-                  
+
                    let resp = response.data;
                    Progress.show(parseInt(shardIndex * 100 / shardTotal));
                     //如果当前分片索引 小于 总的片数
@@ -148,18 +148,18 @@
                         // if(param.shardIndex == 3) return;
                         _this.upload(param);
                     }else{
-                      
+
                       _this.afterUpload(resp)
                       Progress.hide();
                       //解决连续选相同文件 onchange 后续不被触发的bug
                        //每次上传之后 清空文本框的值
                        //该代码 导致后续获取不到file对象
-                       //把该代码移到else中 就解决了该bug 
+                       //把该代码移到else中 就解决了该bug
                        //等待所有分片都上传完成之后在清空文本框的值
                       $("#"+_this.inputId+"-input").val("");
                     }
-          
-                    
+
+
                 });//end post
 
               }//end onload
@@ -181,7 +181,7 @@
             let resp = response.data;
             console.log("请求/file/admin/oss-check/:返回值:response"+response)
             console.log("请求/file/admin/oss-check/:返回值:response.data"+response.data)
-        
+
             if (resp.success) {
               let obj = resp.content;
               if (!obj) {
@@ -204,8 +204,7 @@
             }
           })
         },//end method check
-      }//end methods 
+      }//end methods
     }//end export
   </script>
-  
-  
+

@@ -7,8 +7,11 @@ import com.douding.server.dto.*;
 import com.douding.server.service.CourseCategoryService;
 import com.douding.server.service.CourseService;
 import com.douding.server.util.ValidatorUtil;
+import com.github.pagehelper.Page;
+import io.lettuce.core.GeoArgs;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -31,49 +34,61 @@ public class CourseController {
 
     @PostMapping("/list-category/{courseId}")
     public ResponseDto listCategory(@PathVariable(value="courseId")String courseId){
-
-        return null;
+        ResponseDto<List<CourseCategoryDto>> responseDto = new ResponseDto<>();
+        List<CourseCategoryDto> categoryDtos = courseCategoryService.listByCourse(courseId);
+        responseDto.setContent(categoryDtos);
+        return responseDto;
     }
 
     @RequestMapping("/list")
     public ResponseDto list(CoursePageDto pageDto){
-
-        return null;
+        ResponseDto<PageDto> responseDto = new ResponseDto<>();
+        courseService.list(pageDto);
+        responseDto.setContent(pageDto);
+        return responseDto;
     }
 
     @PostMapping("/save")
     public ResponseDto save(@RequestBody CourseDto courseDto){
-
-
-        return null;
+        ResponseDto<CourseDto> responseDto = new ResponseDto<>();
+        if(!StringUtils.isEmpty(courseDto.getImage()) && !courseDto.getImage().startsWith("http")) {
+            courseDto.setImage("http://127.0.0.1:9003/file/f/" + courseDto.getImage());
+        }
+        courseService.save(courseDto);
+        responseDto.setContent(courseDto);
+        return responseDto;
     }
     
     @DeleteMapping("/delete/{id}")
     public ResponseDto delete(@PathVariable String id){
-
-
-        return null;
+        ResponseDto<CourseDto> responseDto = new ResponseDto<>();
+        courseService.delete(id);
+        return responseDto;
     }
 
     //课程内容相关查找
     @GetMapping("/find-content/{id}")
     public ResponseDto findContent(@PathVariable String id) {
-
-        return null;
+        ResponseDto<CourseContentDto> responseDto = new ResponseDto<>();
+        CourseContentDto courseContentDto = courseService.findContent(id);
+        responseDto.setContent(courseContentDto);
+        return responseDto;
     }
 
     //课程内容保存
     @PostMapping("/save-content")
     public ResponseDto saveConent(@RequestBody CourseContentDto contentDto) {
-
-        return null;
+        ResponseDto<CourseContentDto> responseDto = new ResponseDto<>();
+        courseService.saveContent(contentDto);
+        return responseDto;
     }
 
     //课程排序
     @PostMapping("/sort")
     public ResponseDto sort(@RequestBody SortDto sortDto){
-
-        return null;
+        ResponseDto<SortDto> responseDto = new ResponseDto<>();
+        courseService.sort(sortDto);
+        return responseDto;
     }
 
 }//end class

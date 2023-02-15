@@ -15,6 +15,6 @@ spring:
       max-request-size: 50MB
 
 file:
-  path: /Users/xiaozhe/Downloads/td
+  path: C:/code/work/join-test-two/DouDing/api-file/src/main/resources/f/
   domain: http://127.0.0.1:9000/file/f/
 

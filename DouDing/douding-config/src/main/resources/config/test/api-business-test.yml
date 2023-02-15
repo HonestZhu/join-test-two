@@ -8,3 +8,5 @@ server:
   port: 9002
 
 
+file:
+  path: C:/code/work/join-test-two/DouDing/api-file/src/main/resources/f/

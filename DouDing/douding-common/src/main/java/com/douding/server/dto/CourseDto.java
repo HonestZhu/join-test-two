@@ -105,7 +105,6 @@ public class CourseDto {
                 ", content='" + content + '\'' +
                 ", teacher=" + teacher +
                 ", teacherId='" + teacherId + '\'' +
-                ", teacherId='" + teacherId + '\'' +
                 '}';
     }
 

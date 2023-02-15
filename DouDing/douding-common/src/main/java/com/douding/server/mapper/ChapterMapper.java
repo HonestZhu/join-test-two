@@ -24,7 +24,7 @@ public interface ChapterMapper {
 
     int updateByExample(@Param("record") Chapter record, @Param("example") ChapterExample example);
 
-    int updateByPrimaryKeySelective(Chapter record);
+    int updateByPrimaryKeySelective(@Param("record") Chapter record);
 
-    int updateByPrimaryKey(Chapter record);
+    int updateByPrimaryKey(@Param("record") Chapter record);
 }

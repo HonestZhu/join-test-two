@@ -29,22 +29,30 @@ public class CourseContentFileController {
 
     @GetMapping("/list/{courseId}")
     public ResponseDto list(@PathVariable String courseId){
-
-
-        return null;
+        ResponseDto<List<CourseContentFileDto>> responseDto = new ResponseDto<>();
+        List<CourseContentFileDto> list = courseContentFileService.list(courseId);
+        responseDto.setContent(list);
+        return responseDto;
     }
 
     @PostMapping("/save")
     public ResponseDto save(@RequestBody CourseContentFileDto courseContentFileDto){
+        ValidatorUtil.require(courseContentFileDto.getCourseId(), "course_id");
+        ValidatorUtil.require(courseContentFileDto.getUrl(), "url");
+        ValidatorUtil.require(courseContentFileDto.getName(), "name");
+        ValidatorUtil.require(courseContentFileDto.getSize(), "size");
 
-        return null;
+        ResponseDto<CourseContentFileDto> responseDto = new ResponseDto<>();
+        courseContentFileService.save(courseContentFileDto);
+        responseDto.setContent(courseContentFileDto);
+        return responseDto;
     }
     
     @DeleteMapping("/delete/{id}")
     public ResponseDto delete(@PathVariable String id){
-
-
-        return null;
+        ResponseDto<CourseContentFileDto> responseDto = new ResponseDto<>();
+        courseContentFileService.delete(id);
+        return responseDto;
     }
 
 }//end class

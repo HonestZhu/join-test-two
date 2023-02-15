@@ -1,7 +1,7 @@
 eureka:
   client:
     service-url:
-      defaultZone: http://domain-eureka:8761/eureka/
+      defaultZone: http://127.0.0.1:8761/eureka/
 
 ##将请求转发到对应模块进行处理
 server:
@@ -15,6 +15,6 @@ spring:
       max-request-size: 50MB
 #配置本地上传文件路径
 file:
-  path: /Users/xiaozhe/Downloads/td/
+  path: C:/code/work/join-test-two/DouDing/api-file/src/main/resources/f/
   domain: http://127.0.0.1:9000/file/f/
 

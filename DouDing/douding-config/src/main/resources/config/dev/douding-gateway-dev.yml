@@ -6,7 +6,7 @@ eureka:
     fetch-registry: true
     register-with-eureka: true
     service-url:
-      defaultZone: http://domain-eureka:8761/eureka/
+      defaultZone: http://127.0.0.1:8761/eureka/
 
 ##将请求转发到对应模块进行处理
 spring:
@@ -43,9 +43,9 @@ spring:
             - name: LoginAdmin
             - StripPrefix=0
   redis:
-    host: 192.168.38.130
+    host: 127.0.0.1
     port: 6379
-    password: html
+    password: root
 
 
 

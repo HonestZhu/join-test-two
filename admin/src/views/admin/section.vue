@@ -21,7 +21,7 @@
         </p>
 
         <pagination ref="pagination" v-bind:list="list" v-bind:itemCount="8"></pagination>
-        
+
         <table id="simple-table" class="table  table-bordered table-hover">
             <thead>
             <tr>
@@ -39,7 +39,7 @@
             <tr v-for="section in sections">
                             <td>{{section.id}}</td>
                             <td>{{section.title}}</td>
-                           
+
                             <td>{{section.video}}</td>
                             <td>{{section.time | formatSecond}}</td>
                             <td>{{SECTION_CHARGE | optionKV(section.charge)}}</td>
@@ -76,12 +76,12 @@
                                                 <input v-model="section.title" class="form-control" placeholder="标题,无错类型:String">
                                             </div>
                                         </div>
-                                        
+
                                         <div class="form-group">
                                             <label class="col-sm-2 control-label">课程</label>
                                             <div class="col-sm-10">
                                                 <p class="form-control">{{course.name}}</p>
-                                                
+
                                             </div>
                                         </div>
                                         <div class="form-group">
@@ -90,14 +90,14 @@
                                                 <p class="form-control">{{chapter.name}}</p>
                                             </div>
                                         </div>
-                                        
+
                                         <div class="form-group">
                                             <label class="col-sm-2 control-label">视频上传</label>
                                             <div class="col-sm-10">
-                                                <big-file 
+                                                <big-file
                                                 v-bind:suffixs="['mp4']"
                                                 v-bind:input-id="'video-upload'"
-                                                v-bind:text="'上传视频'" 
+                                                v-bind:text="'上传视频'"
                                                 v-bind:use="FILE_USE.COURSE.key"
                                                 v-bind:after-upload="afterUpload"
                                                 v-bind:shard-size="10*1024*1024"></big-file>
@@ -112,7 +112,7 @@
                                             <label class="col-sm-2 control-label">时长</label>
                                             <div class="col-sm-10">
                                                 <p class="form-control">{{section.time}}秒</p>
-                                                
+
                                             </div>
                                         </div>
                                         <div class="form-group">
@@ -148,7 +148,7 @@
                     <div class="modal-body">
                         <form class="form-horizontal">
                             <div class="form-group">
-                                
+
                                 <div class="col-sm-12">
                                     <div v-show="section.video" class="row">
                                         <div class="col-md-12">
@@ -157,10 +157,10 @@
                                     </div>
                                 </div>
                             </div>
-                                        
+
                         </form>
                     </div>
-                    
+
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
         </div><!-- /.modal player end-->
@@ -296,20 +296,20 @@ export default {
         },//end methods del
         //文件上传的回调函数
         afterUpload(data){
-            // 注意这里有个bug 
+            // 注意这里有个bug
             //当video 标签第一次赋值后
             //再次给video 的src赋值 视频是不会正确加载的
             //因为section表中记录了一个之前的视频地址显示模态框时已经给video赋值了
             //所以动态绑定video src 改变值并没有改变视频
             let _this = this;
-            _this.section.video = data.content.path;
+            _this.section.video = "http://127.0.0.1:9003/file/f/" + data.content.path;
             //重新加载video空间 解决上面提到的bug
             this.$nextTick(function () {
                 $("#video").load();
             });
             _this.$forceUpdate();
             _this.getTime();
-            
+
         }, //end method afterUpload  file.vue组件的回调函数
         // 获取视频时长
         getTime(){
@@ -329,16 +329,15 @@ export default {
         let _this = this;
         _this.section = $.extend({},section);
         $("#player-modal").modal("show");
-
         // let _this = this;
         // this.$nextTick(function () {
         //     $("#videoPlayer").load();
         // });
         // console.log(section.video);
-        
+
         // let player = document.getElementById("myVideo");
         // player.play();
-        
+
       },//end method play
 
       closeModal(){
@@ -349,7 +348,7 @@ export default {
         // myVideo.pause();
       },//end method closeModal
 
-      
+
 
 
     },//end methods

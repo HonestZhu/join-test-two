@@ -43,26 +43,37 @@ public class TeacherService {
 
     public void save(TeacherDto teacherDto) {
 
+        Teacher teacher = CopyUtil.copy(teacherDto, Teacher.class);
 
+        //判断是新增 还是修改
+        if (StringUtils.isEmpty(teacherDto.getId())) {
+            this.insert(teacher);
+        } else {
+            this.update(teacher);
+        }
     }
 
     //新增数据
     private void insert(Teacher teacher) {
 
-
+        teacher.setId(UuidUtil.getShortUuid());
+        teacherMapper.insert(teacher);
     }
 
     //更新数据
     private void update(Teacher teacher) {
-
+        teacherMapper.updateByPrimaryKey(teacher);
     }
 
     public void delete(String id) {
-
+        teacherMapper.deleteByPrimaryKey(id);
     }
 
     public List<TeacherDto> all() {
-       return null;
+       TeacherExample teacherExample = new TeacherExample();
+        List<Teacher> teacherList = teacherMapper.selectByExample(teacherExample);
+        List<TeacherDto> teacherDtoList = CopyUtil.copyList(teacherList, TeacherDto.class);
+        return teacherDtoList;
     }
 
 
@@ -71,7 +82,8 @@ public class TeacherService {
      * @param id
      */
     public TeacherDto findById(String id) {
-
-        return null;
+        Teacher teacher = teacherMapper.selectByPrimaryKey(id);
+        TeacherDto teacherDto = CopyUtil.copy(teacher, TeacherDto.class);
+        return teacherDto;
     }
 }//end class

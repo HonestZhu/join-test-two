@@ -97,4 +97,11 @@ public class CourseCategoryService {
         return CopyUtil.copyList(categories, CourseCategoryDto.class);
     }
 
+    public List<CourseCategoryDto> listByCategory(String categoryId) {
+        CourseCategoryExample example = new CourseCategoryExample();
+        example.createCriteria().andCategoryIdEqualTo(categoryId);
+        List<CourseCategory> categories = courseCategoryMapper.selectByExample(example);
+        return CopyUtil.copyList(categories, CourseCategoryDto.class);
+    }
+
 }//end class

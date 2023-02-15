@@ -27,23 +27,28 @@ public class ChapterController {
 
     @RequestMapping("/list")
     public ResponseDto list(ChapterPageDto chapterPageDto){
-
-
-        return null;
+        ResponseDto<PageDto> responseDto = new ResponseDto<>();
+        chapterService.list(chapterPageDto);
+        responseDto.setContent(chapterPageDto);
+        return responseDto;
     }
 
     @PostMapping("/save")
     public ResponseDto save(@RequestBody ChapterDto chatperDto){
+        ValidatorUtil.require(chatperDto.getCourseId(), "course_id");
+        ValidatorUtil.require(chatperDto.getName(), "name");
 
-
-        return null;
+        ResponseDto<ChapterDto> responseDto = new ResponseDto<>();
+        chapterService.save(chatperDto);
+        responseDto.setContent(chatperDto);
+        return responseDto;
     }
 
     @DeleteMapping("/delete/{id}")
     public ResponseDto delete(@PathVariable String id){
-
-
-        return null;
+        ResponseDto<ChapterDto> responseDto = new ResponseDto<>();
+        chapterService.delete(id);
+        return responseDto;
     }
 
 }

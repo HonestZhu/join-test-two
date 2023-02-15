@@ -29,22 +29,28 @@ public class SectionController {
 
     @RequestMapping("/list")
     public ResponseDto list(SectionPageDto pageSectionDto){
-
-
-        return null;
+        ResponseDto<PageDto> responseDto = new ResponseDto<>();
+        sectionService.list(pageSectionDto);
+        responseDto.setContent(pageSectionDto);
+        return responseDto;
     }
 
     @PostMapping("/save")
     public ResponseDto save(@RequestBody SectionDto sectionDto){
-
-
-        return null;
+        ResponseDto<SectionDto> responseDto = new ResponseDto<>();
+        if(!sectionDto.getVideo().startsWith("http")) {
+            sectionDto.setVideo("http://127.0.0.1:9003/file/f/" + sectionDto.getVideo());
+        }
+        sectionService.save(sectionDto);
+        responseDto.setContent(sectionDto);
+        return responseDto;
     }
     
     @DeleteMapping("/delete/{id}")
     public ResponseDto delete(@PathVariable String id){
-
-        return null;
+        ResponseDto<SectionDto> responseDto = new ResponseDto<>();
+        sectionService.delete(id);
+        return responseDto;
     }
 
 }//end class

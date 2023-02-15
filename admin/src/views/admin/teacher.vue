@@ -60,7 +60,7 @@
 
         </div>
         </div>
-    
+
         <div id="form-modal" class="modal fade" tabindex="-1" role="dialog">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -85,10 +85,10 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">头像</label>
                                 <div class="col-sm-10">
-                                    <big-file 
+                                    <big-file
                                     v-bind:suffixs="['jpg','jpeg','png']"
                                     v-bind:input-id="'image-upload'"
-                                    v-bind:text="'上传头像'" 
+                                    v-bind:text="'上传头像'"
                                     v-bind:use="FILE_USE.TEACHER.key"
                                     v-bind:after-upload="afterUpload"></big-file>
                                     <div v-show="teacher.image" class="row">
@@ -96,7 +96,7 @@
                                             <img v-bind:src="teacher.image" class="img-responsive">
                                         </div>
                                     </div>
-                                    
+
                                 </div>
                             </div>
                             <div class="form-group">
@@ -242,10 +242,10 @@ export default {
                     }) //end del then
             })//end show
         },//end method del
-        
+
         afterUpload(data){
             let _this = this;
-            _this.teacher.image = data.content.path;
+            _this.teacher.image = "http://127.0.0.1:9003/file/f/" + data.content.path;
             _this.$forceUpdate();
         }, //end method afterUpload  file.vue组件的回调函数
 
@@ -253,4 +253,3 @@ export default {
 
 }
 </script>
-  
